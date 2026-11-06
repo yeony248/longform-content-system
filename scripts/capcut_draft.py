@@ -20,6 +20,29 @@ def load_profile():
     return {}
 
 
+def gpu_count():
+    try:
+        import ctranslate2
+        return ctranslate2.get_cuda_device_count()
+    except Exception:
+        return 0
+
+
+def load_whisper(model=None):
+    """받아쓰기 모델을 연다. 모델 이름: 인자 > profile.json whisper_model > 자동(GPU면 large-v3, 아니면 small).
+    처음 쓰는 모델은 인터넷에서 내려받는다(large-v3 약 3GB, medium 약 1.5GB, small 약 0.5GB)."""
+    from faster_whisper import WhisperModel
+    gpu = gpu_count() > 0
+    model = model or load_profile().get("whisper_model") or ("large-v3" if gpu else "small")
+    print(f"받아쓰기 모델 {model} ({'GPU' if gpu else 'CPU'}). 처음 쓰는 모델이면 내려받느라 시간이 걸립니다.", flush=True)
+    if gpu:
+        try:
+            return WhisperModel(model, device="cuda", compute_type="float16")
+        except Exception as e:
+            print("GPU로 열지 못해 CPU로 받아씁니다:", str(e)[:120], flush=True)
+    return WhisperModel(model, device="cpu", compute_type="int8")
+
+
 def load_project(path):
     p = json.load(open(path, encoding="utf-8"))
     p["_dir"] = os.path.dirname(os.path.abspath(path))

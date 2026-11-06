@@ -43,11 +43,7 @@ fc = os.path.join(OUT, "fc.txt"); open(fc, "w", encoding="utf-8").write(";".join
 wav = os.path.join(OUT, "목소리.wav")
 subprocess.run(["ffmpeg", "-v", "error", "-y", *ins, "-filter_complex_script", fc, "-map", "[o]", "-ac", "1", wav], check=True)
 
-from faster_whisper import WhisperModel
-try:
-    m = WhisperModel("large-v3", device="cuda", compute_type="float16")
-except Exception:
-    m = WhisperModel("large-v3", device="cpu", compute_type="int8")
+m = cd.load_whisper()
 res, _ = m.transcribe(wav, language="ko", word_timestamps=True, vad_filter=False, condition_on_previous_text=False)
 words = [(round(w.start, 2), round(w.end, 2), w.word.strip(), round(w.probability, 2)) for s in res for w in s.words if w.word.strip()]
 json.dump({"cuts": [round(a, 2) for a, *_ in segs], "words": words}, open(os.path.join(OUT, "받아쓰기.json"), "w", encoding="utf-8"), ensure_ascii=False)

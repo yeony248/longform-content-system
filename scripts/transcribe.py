@@ -1,8 +1,10 @@
 # 녹화 영상을 단어 시각까지 받아쓴다 (faster-whisper).
-# 실행: python transcribe.py <영상> <출력폴더> [--start 초] [--end 초] [--model large-v3] [--lang ko]
+# 실행: python transcribe.py <영상> <출력폴더> [--start 초] [--end 초] [--model 모델이름] [--lang ko]
 # 결과: <출력폴더>/words.json  [[시작, 끝, 단어, 확신도], ...] (원본 영상 기준 초)
 #       <출력폴더>/transcript.txt  문장 단위, "분:초 ~ 분:초 | 문장"  ← 이걸 읽고 쓸 구간을 고른다
 import argparse, json, os, subprocess, sys, tempfile
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import capcut_draft as cd
 try:
     sys.stdout.reconfigure(encoding="utf-8")
 except Exception:
@@ -11,7 +13,7 @@ except Exception:
 ap = argparse.ArgumentParser()
 ap.add_argument("video"); ap.add_argument("out")
 ap.add_argument("--start", type=float, default=0.0); ap.add_argument("--end", type=float, default=None)
-ap.add_argument("--model", default="large-v3"); ap.add_argument("--lang", default="ko")
+ap.add_argument("--model", default=None); ap.add_argument("--lang", default="ko")
 a = ap.parse_args()
 os.makedirs(a.out, exist_ok=True)
 
@@ -21,12 +23,7 @@ if a.end:
     cmd += ["-t", str(a.end - a.start)]
 subprocess.run(cmd + ["-i", a.video, "-vn", "-ac", "1", "-ar", "16000", wav], check=True)
 
-from faster_whisper import WhisperModel
-try:
-    m = WhisperModel(a.model, device="cuda", compute_type="float16")
-except Exception:
-    print("GPU를 쓸 수 없어 CPU로 받아씁니다. 1시간 영상은 수십 분 걸릴 수 있어요.")
-    m = WhisperModel(a.model, device="cpu", compute_type="int8")
+m = cd.load_whisper(a.model)
 segs, _ = m.transcribe(wav, language=a.lang, word_timestamps=True, vad_filter=True, condition_on_previous_text=False)
 
 fmt = lambda x: f"{int(x // 60)}:{x % 60:05.2f}"

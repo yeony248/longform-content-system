@@ -26,6 +26,7 @@
   },
   "bgm": {"intro": "", "outro": "", "volume": 0.22},
   "encoder": "libx264",
+  "whisper_model": "",
   "fps": 30,
   "work_root": "C:/영상작업/유튜브",
   "export_dir": "C:/영상작업/내보내기",
