@@ -1,0 +1,30 @@
+{
+  "name": "OO 도구 소개 롱폼",
+  "source_video": "C:/영상작업/원본/줌녹화.mp4",
+  "masked_video": "",
+  "words": "받아쓰기/words.json",
+  "canvas": [1920, 1080],
+  "cuts": [[120.5, 185.2], [240.0, 312.8]],
+  "captions": {
+    "max_chars": 16,
+    "fix": [["채찍피티", "챗GPT"]],
+    "fillers": ["네", "어", "자", "아", "음", "그"]
+  },
+  "privacy": {
+    "words": ["OO카페", "홍길동"],
+    "regex": [],
+    "regions": [],
+    "step": 0.5
+  },
+  "drafts": {"cut": "OO 도구 롱폼(컷 초안)"},
+  "shorts": {
+    "source": "C:/영상작업/내보내기/OO 도구 롱폼.mp4",
+    "captions_from": "OO 도구 롱폼(최종)",
+    "caption_track": "",
+    "crop": "",
+    "end_text": "풀영상은 유튜브 '내 채널 이름'에서",
+    "items": [
+      {"name": "OO 숏폼1_결과(초안)", "hook": "가장 센 한 줄\n두 번째 줄", "pieces": [[288.4, 312.0], [354.6, 375.8]]}
+    ]
+  }
+}

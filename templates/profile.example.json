@@ -1,0 +1,34 @@
+{
+  "channel_name": "내 채널 이름",
+  "links": {
+    "링크 모음": "https://example.com/links",
+    "블로그": "https://blog.example.com",
+    "인스타그램": "@my_account",
+    "문의": "hello@example.com"
+  },
+  "hashtags": ["#내채널", "#주제"],
+  "brand": {
+    "background": "#1F1F1F",
+    "accent": "#FF8A00",
+    "card": "#F7F3EE",
+    "text": "#1F1F1F",
+    "highlight": "#FFE14D",
+    "font": "Pretendard"
+  },
+  "capcut_drafts_dir": "",
+  "longform_template_draft": "롱폼 템플릿",
+  "shorts_template_draft": "숏폼 템플릿",
+  "shorts_layout": {"caption_y": -0.34, "caption_scale": 0.92, "end_y": -0.52, "end_scale": 0.5, "end_seconds": 3.0},
+  "sfx": {
+    "whoosh": "C:/내 효과음/whoosh.mp3",
+    "ding": "C:/내 효과음/ding.mp3",
+    "click": "C:/내 효과음/click.mp3"
+  },
+  "bgm": {"intro": "", "outro": "", "volume": 0.22},
+  "encoder": "libx264",
+  "fps": 30,
+  "work_root": "C:/영상작업/유튜브",
+  "export_dir": "C:/영상작업/내보내기",
+  "blog_tone_file": "",
+  "thumbnail_tool": "직접 제작"
+}
